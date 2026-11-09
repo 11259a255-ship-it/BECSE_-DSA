@@ -1,0 +1,129 @@
+#include <stdio.h>
+
+void BubbleSort(int arr[], int n)
+{
+    int i, j, temp;
+
+    for(i = 0; i < n-1; i++)
+    {
+        for(j = 0; j < n-1-i; j++)
+        {
+            if(arr[j] < arr[j+1])
+            {
+                temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+void SelectionSort(int arr[], int n)
+{
+    int i, j, max, temp;
+
+    for(i = 0; i < n-1; i++)
+    {
+        max = i;
+
+        for(j = i+1; j < n; j++)
+        {
+            if(arr[j] > arr[max])
+                max = j;
+        }
+
+        temp = arr[i];
+        arr[i] = arr[max];
+        arr[max] = temp;
+    }
+}
+
+void Heapify(int arr[], int n, int i)
+{
+    int largest = i;
+    int left = 2*i+1;
+    int right = 2*i+2;
+    int temp;
+
+    if(left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if(right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if(largest != i)
+    {
+        temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+
+        Heapify(arr, n, largest);
+    }
+}
+
+void HeapSort(int arr[], int n)
+{
+    int i, temp;
+
+    for(i = n/2-1; i >= 0; i--)
+        Heapify(arr, n, i);
+
+    for(i = n-1; i > 0; i--)
+    {
+        temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        Heapify(arr, i, 0);
+    }
+
+    for(i = 0; i < n/2; i++)
+    {
+        temp = arr[i];
+        arr[i] = arr[n-1-i];
+        arr[n-1-i] = temp;
+    }
+}
+
+void Display(int arr[], int n)
+{
+    int i;
+
+    for(i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+
+    printf("\n");
+}
+
+int main()
+{
+    int arr[100], a[100], b[100], c[100];
+    int n, i;
+
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    printf("Enter student marks:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+        a[i] = arr[i];
+        b[i] = arr[i];
+        c[i] = arr[i];
+    }
+
+    BubbleSort(a, n);
+    printf("\nBubble Sort: ");
+    Display(a, n);
+
+    SelectionSort(b, n);
+    printf("Selection Sort: ");
+    Display(b, n);
+
+    HeapSort(c, n);
+    printf("Heap Sort: ");
+    Display(c, n);
+
+    return 0;
+}
